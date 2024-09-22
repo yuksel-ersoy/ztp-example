@@ -60,13 +60,13 @@ spec:
         nodeNetwork:
           interfaces:
             - name: enp1s0
-              macAddress: "52:54:00:b4:44:44"
+              mac-address: "52:54:00:b4:44:44"
           config:
             interfaces:
               - name: enp1s0
                 type: ethernet
                 state: up
-                macAddress: "52:54:00:b4:44:44"
+                mac-address: "52:54:00:b4:44:44"
                 ipv4:
                   enabled: true
                   address:
