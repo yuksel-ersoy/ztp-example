@@ -1,7 +1,7 @@
 # GitOps ZTP pipeline
 ![GitOps ZTP flow overview](ztp_gitops_flow.png)
 
-## Installing the GitOps Zero Touch Provisioning pipeline
+## Installing the GitOps Zero Touch Provisioning pipeline yuksel
 
 ### Obtaining the ZTP site generator container
 The GitOps ZTP infrastructure relies on the ztp-site-generator container to provide the tools which transform SiteConfig and PolicyGenTemplate CRs into the underlying installation and configuration CRs. This container can be pulled from pre-build/official sources or built from source by following [Building the container](../../resource-generator/README.md)
