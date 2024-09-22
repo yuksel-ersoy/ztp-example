@@ -6,7 +6,7 @@ metadata:
   name: "example-sno"
   namespace: "example-sno"
 spec:
-  baseDomain: "ocpztp.local"
+  baseDomain: "example.com"
   pullSecretRef:
     name: "assisted-deployment-pull-secret"
   clusterImageSetNameRef: "img4.16.11-x86-64-appsub"
