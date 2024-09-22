@@ -6,11 +6,11 @@ metadata:
   name: "example-sno"
   namespace: "example-sno"
 spec:
-  baseDomain: "example.com"
+  baseDomain: "ocpztp.local"
   pullSecretRef:
     name: "assisted-deployment-pull-secret"
-  clusterImageSetNameRef: "openshift-4.10"
-  sshPublicKey: "ssh-rsa AAAA..."
+  clusterImageSetNameRef: "img4.16.11-x86-64-appsub"
+  sshPublicKey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBcDq4GIaoebInC4mYG9zMu+ajCt9v3silVUkRj8DChK root@prov9.local"
   clusters:
   - clusterName: "example-sno"
     networkType: "OVNKubernetes"
@@ -24,31 +24,31 @@ spec:
       # Normally this should match or contain the cluster name so it only applies to a single cluster
       sites : "example-sno"
     clusterNetwork:
-      - cidr: 1001:1::/48
-        hostPrefix: 64
+      - cidr: 10.128.0.0/14
+        hostPrefix: 23
     machineNetwork:
-      - cidr: 1111:2222:3333:4444::/64
+      - cidr: 192.168.63.0/24
     serviceNetwork:
-      - 1001:2::/112
-    additionalNTPSources:
-      - 1111:2222:3333:4444::2
+      - 172.30.0.0/16
+    #additionalNTPSources:
+    #- 1111:2222:3333:4444::2
     # Optionally; This can be used to override the KlusterletAddonConfig that is created for this cluster:
     #crTemplates:
     #  KlusterletAddonConfig: "KlusterletAddonConfigOverride.yaml"
     nodes:
-      - hostName: "example-node1.example.com"
+      - hostName: "example-sno"
         role: "master"
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
-        bmcAddress: "idrac-virtualmedia+https://[1111:2222:3333:4444::bbbb:1]/redfish/v1/Systems/System.Embedded.1"
+        bmcAddress: "redfish-virtualmedia+http://192.168.62.251:8000/redfish/v1/Systems/50cc6827-1a04-4957-a81d-9b9e90bb1f18"
         bmcCredentialsName:
-          name: "example-node1-bmh-secret"
-        bootMACAddress: "AA:BB:CC:DD:EE:11"
+          name: "bmh-secret"
+        bootMACAddress: "52:54:00:b4:44:44"
         # Use UEFISecureBoot to enable secure boot
         bootMode: "UEFI"
-        rootDeviceHints:
-          wwn: "0x11111000000asd123"
+          #        rootDeviceHints:
+          #          wwn: "0x11111000000asd123"
         # example of diskPartition below is used for image registry (check ImageRegistry.md for more details), but it's not limited to this use case
 #        diskPartition:
 #          - device: /dev/disk/by-id/wwn-0x11111000000asd123 # match rootDeviceHints
@@ -56,36 +56,37 @@ spec:
 #              - mount_point: /var/imageregistry
 #                size: 102500
 #                start: 344844
-        cpuset: "0-1,52-53"
+#        cpuset: "0-1,52-53"
         nodeNetwork:
           interfaces:
-            - name: eno1
-              macAddress: "AA:BB:CC:DD:EE:11"
+            - name: enp1s0
+              macAddress: "52:54:00:b4:44:44"
           config:
             interfaces:
-              - name: eno1
+              - name: enp1s0
                 type: ethernet
                 state: up
-                macAddress: "AA:BB:CC:DD:EE:11"
+                macAddress: "52:54:00:b4:44:44"
                 ipv4:
-                  enabled: false
-                ipv6:
                   enabled: true
                   address:
+                  - ip: 192.168.63.188
+                    prefix-length: 24
+                ipv6:
+                  enabled: false
+                    #                  address:
                   # For SNO sites with static IP addresses, the node-specific,
                   # API and Ingress IPs should all be the same and configured on
                   # the interface
-                  - ip: 1111:2222:3333:4444::aaaa:1
-                    prefix-length: 64
+                  #                  - ip: 192.168.63.188
+                  #                    prefix-length: 24
             dns-resolver:
               config:
-                search:
-                - example.com
                 server:
-                - 1111:2222:3333:4444::2
+                - 192.168.63.163
             routes:
               config:
-              - destination: ::/0
-                next-hop-interface: eno1
-                next-hop-address: 1111:2222:3333:4444::1
+              - destination: 0.0.0.0/0
+                next-hop-interface: enp1s0
+                next-hop-address: 192.168.63.1
                 table-id: 254
