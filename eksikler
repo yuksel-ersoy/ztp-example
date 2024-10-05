@@ -1,0 +1,50 @@
+firewall-cmd --add-port=8000/tcp --permanent
+firewall-cmd --reload
+
+
+oc patch hiveconfig hive --type merge -p '{"spec":{"targetNamespace":"hive","logLevel":"debug","featureGates":{"custom":{"enabled":["AlphaAgentInstallStrategy"]},"featureSet":"Custom"}}}'
+
+
+oc apply -f 00-provisioning.yaml
+
+
+oc patch argocd openshift-gitops -n openshift-gitops  --type=merge --patch-file argocd/deployment/argocd-openshift-gitops-patch.json
+
+
+oc apply -k argocd/deployment/
+
+
+export CLUSTERNS=example-sno
+oc create namespace $CLUSTERNS
+
+
+oc apply -f - <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: assisted-deployment-pull-secret
+  namespace: $CLUSTERNS
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: $(base64 -w0 <pull-secret.json)
+EOF
+
+
+
+oc apply -f - <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: bmh-secret
+  namespace: $CLUSTERNS
+type: Opaque
+data:
+  username: dGVzdAo=
+  password: dGVzdAo=
+EOF
+
+
+oc get clusterImageSets
+
+
+
