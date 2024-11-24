@@ -10,7 +10,7 @@ spec:
   pullSecretRef:
     name: "assisted-deployment-pull-secret"
   clusterImageSetNameRef: "img4.14.38-x86-64-appsub"
-  sshPublicKey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFcGadvq//BwdEyE6BaDmuNKOJwSq4q9Mlyf/stLkEev kni@bastion.pele"
+  sshPublicKey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFNYJ+O4a5dDxnb7Ld9CZsbfi+jynnmf3fMbDo1TPDWG root@prov9.local"
   clusters:
   - clusterName: "example-sno"
     networkType: "OVNKubernetes"
@@ -41,10 +41,10 @@ spec:
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
-        bmcAddress: "redfish-virtualmedia+http://192.168.62.252:8000/redfish/v1/Systems/9207cb0f-bd44-476f-b4e7-8977b5b6dff5"
+        bmcAddress: "redfish-virtualmedia+http://192.168.62.252:8000/redfish/v1/Systems/345b4438-1977-4e84-b226-ba3535d7fc1e"
         bmcCredentialsName:
           name: "bmh-secret"
-        bootMACAddress: "52:54:00:82:37:3b"
+        bootMACAddress: "52:54:00:cc:44:85"
         # Use UEFISecureBoot to enable secure boot
         bootMode: "UEFI"
           #        rootDeviceHints:
@@ -60,7 +60,7 @@ spec:
         nodeNetwork:
           interfaces:
             - name: enp1s0
-              macAddress: "52:54:00:82:37:3b"
+              macAddress: "52:54:00:cc:44:85"
           config:
             interfaces:
               - name: enp1s0
