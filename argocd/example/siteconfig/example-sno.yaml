@@ -9,8 +9,8 @@ spec:
   baseDomain: "example.com"
   pullSecretRef:
     name: "assisted-deployment-pull-secret"
-  clusterImageSetNameRef: "img4.17.5-x86-64-appsub"
-  sshPublicKey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFNYJ+O4a5dDxnb7Ld9CZsbfi+jynnmf3fMbDo1TPDWG root@prov9.local"
+  clusterImageSetNameRef: "img4.17.4-x86-64-appsub"
+  sshPublicKey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFcGadvq//BwdEyE6BaDmuNKOJwSq4q9Mlyf/stLkEev kni@bastion.pele"
   clusters:
   - clusterName: "example-sno"
     networkType: "OVNKubernetes"
