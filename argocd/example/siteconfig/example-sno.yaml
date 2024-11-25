@@ -41,10 +41,10 @@ spec:
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
-        bmcAddress: "redfish-virtualmedia+http://192.168.62.252:8000/redfish/v1/Systems/345b4438-1977-4e84-b226-ba3535d7fc1e"
+        bmcAddress: "redfish-virtualmedia+http://192.168.62.252:8000/redfish/v1/Systems/1f89b824-b884-4550-b4e8-c474dcd9c561"
         bmcCredentialsName:
           name: "bmh-secret"
-        bootMACAddress: "52:54:00:cc:44:85"
+        bootMACAddress: "52:54:00:e4:1b:2e"
         # Use UEFISecureBoot to enable secure boot
         bootMode: "UEFI"
           #        rootDeviceHints:
@@ -60,7 +60,7 @@ spec:
         nodeNetwork:
           interfaces:
             - name: enp1s0
-              macAddress: "52:54:00:cc:44:85"
+              macAddress: "52:54:00:e4:1b:2e"
           config:
             interfaces:
               - name: enp1s0
